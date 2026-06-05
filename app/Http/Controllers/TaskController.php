@@ -12,7 +12,7 @@ class TaskController extends Controller
     //タスク一覧
     public function index(Category $category)
     {
-        abort_unless($category->user_id === auth()->id(), 403);
+        $this->authorize('view', $category);
 
         $tasks = $category->tasks()->get();
 
@@ -21,13 +21,14 @@ class TaskController extends Controller
     //タスクの作成
     public function create(Category $category)
     {
-        abort_unless($category->user_id === auth()->id(), 403);
+        $this->authorize('view', $category);
 
         return view('tasks.create', compact('category'));
     }
 
     public function store(TaskRequest $request, Category $category)
     {
+        $this->authorize('view', $category);
 
         Task::create([
             'title' => $request->title,
@@ -44,7 +45,9 @@ class TaskController extends Controller
     //タスクの編集
     public function edit(Category $category, Task $task)
     {
-        abort_unless($category->user_id === auth()->id(), 403);
+        $this->authorize('view', $category);
+
+        $this->authorize('update', $task);
         //念の為のカテゴリー一致チェック
         abort_unless($task->category_id === $category->id, 403);
 
@@ -53,7 +56,10 @@ class TaskController extends Controller
 
     public function update(TaskRequest $request, Category $category, Task $task)
     {
-        abort_unless($category->user_id === auth()->id(), 403);
+        $this->authorize('view', $category);
+
+        $this->authorize('update', $task);
+        //念の為のカテゴリー一致チェック
         abort_unless($task->category_id === $category->id, 403);
 
         $task->update([
@@ -71,7 +77,9 @@ class TaskController extends Controller
     //タスクの削除
     public function destroy(Category $category, Task $task)
     {
-        abort_unless($category->user_id === auth()->id(), 403);
+        $this->authorize('view', $category);
+        $this->authorize('delete', $task);
+
         abort_unless($task->category_id === $category->id, 403);
 
         $task->delete();
