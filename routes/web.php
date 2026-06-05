@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TaskController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,3 +25,23 @@ Route::middleware(['auth'])->get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class);
 });
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/categories/{category}/tasks/create', [TaskController::class, 'create'])
+        ->name('tasks.create');
+
+    Route::post('/categories/{category}/tasks', [TaskController::class, 'store'])
+        ->name('tasks.store');
+});
+Route::get('/categories/{category}/tasks', [TaskController::class, 'index'])
+    ->name('tasks.index');
+
+Route::get('/categories/{category}/tasks/{task}/edit', [TaskController::class, 'edit'])
+    ->name('tasks.edit');
+
+Route::delete('/categories/{category}/tasks/{task}', [TaskController::class, 'destroy'])
+    ->name('tasks.destroy');
+
+Route::put('/categories/{category}/tasks/{task}', [TaskController::class, 'update'])
+    ->name('tasks.update');
