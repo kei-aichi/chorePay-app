@@ -47,7 +47,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        abort_unless($category->user_id === auth()->id(), 403);
+        $this->authorize('view', $category);
 
         return view('categories.show', compact('category'));
     }
@@ -58,7 +58,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         //他人のデータ防止
-        abort_unless($category->user_id === auth()->id(), 403);
+        $this->authorize('update', $category);
 
         return view('categories.edit', compact('category'));
     }
@@ -68,7 +68,7 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category)
     {
-        abort_unless($category->user_id === auth()->id(), 403);
+        $this->authorize('update', $category);
 
         $category->update([
             'name' => $request->name,
@@ -85,7 +85,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        abort_unless($category->user_id === auth()->id(), 403);
+        $this->authorize('delete', $category);
 
         $category->delete();
 
