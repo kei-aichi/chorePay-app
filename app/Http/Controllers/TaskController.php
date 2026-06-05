@@ -5,6 +5,7 @@ use App\Models\Category;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\TaskRequest;
 
 class TaskController extends Controller
 {
@@ -25,13 +26,8 @@ class TaskController extends Controller
         return view('tasks.create', compact('category'));
     }
 
-    public function store(Request $request, Category $category)
+    public function store(TaskRequest $request, Category $category)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'amount' => 'required|integer|min:0',
-            'done_at' => 'required|date',
-        ]);
 
         Task::create([
             'title' => $request->title,
@@ -42,7 +38,7 @@ class TaskController extends Controller
         ]);
 
         return redirect()
-            ->route('categories.index')
+            ->route('task.index', $category)
             ->with('success', 'タスクを追加しました。');
     }
     //タスクの編集
@@ -55,21 +51,16 @@ class TaskController extends Controller
         return view('tasks.edit', compact('category', 'task'));
     }
 
-    public function update(Request $request, Category $category, Task $task)
+    public function update(TaskRequest $request, Category $category, Task $task)
     {
         abort_unless($category->user_id === auth()->id(), 403);
         abort_unless($task->category_id === $category->id, 403);
-
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'amount' => 'required|integer|min:0',
-            'done_at' => 'required|date',
-        ]);
 
         $task->update([
             'title' => $request->title,
             'amount' => $request->amount,
             'done_at' => $request->done_at,
+
         ]);
 
         return redirect()
