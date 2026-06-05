@@ -3,9 +3,16 @@
         {{ $category->name }} のタスク一覧
     </h1>
 
-    <a href="{{ route('tasks.create', $category) }}" class="text-blue-500">
-        + タスク追加
-    </a>
+    <div class="flex justify-between items-center mb-4">
+        <a href="{{ route('categories.index') }}" class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600">
+            ← カテゴリー一覧へ
+        </a>
+
+        <a href="{{ route('tasks.create', $category) }}"
+            class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600">
+            ＋ タスク追加
+        </a>
+    </div>
 
     <ul class="mt-4 space-y-2">
         @forelse ($tasks as $task)

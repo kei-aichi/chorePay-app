@@ -7,9 +7,15 @@
         </div>
     @endif
 
-    <a href="{{ route('categories.create') }}" class="text-blue-500">
-        + 新規作成
-    </a>
+    <div class="flex justify-between items-center mb-4">
+        <a href="{{ route('dashboard') }}" class="bg-blue-500 text-white px-3 py-2 rounded">
+            ← ダッシュボードへ
+        </a>
+
+        <a href="{{ route('categories.create') }}" class="bg-blue-500 text-white px-3 py-2 rounded">
+            + 新規作成
+        </a>
+    </div>
 
     <ul class="mt-4 space-y-2">
         @forelse($categories as $category)

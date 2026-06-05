@@ -2,6 +2,13 @@
     <h1 class="text-2xl font-bold mb-4">
         タスク作成（{{ $category->name }}）
     </h1>
+
+    <div class="mb-4">
+        <a href="{{ route('tasks.index', $category) }}"
+            class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600">
+            ← 戻る
+        </a>
+    </div>
     @if ($errors->any())
         <div class="bg-red-100 text-red-700 p-2 mb-4">
             <ul>
