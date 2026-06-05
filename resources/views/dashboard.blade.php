@@ -3,6 +3,11 @@
         ChorePay ダッシュボード
     </h1>
 
+    <div class="mb-4">
+        <a href="{{ route('categories.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded">
+            カテゴリー一覧へ
+        </a>
+    </div>
     <div class="bg-white shadow rounded p-6">
         <h2 class="text-lg font-semibold">
             今週のお小遣い合計
