@@ -38,7 +38,7 @@ class TaskController extends Controller
         ]);
 
         return redirect()
-            ->route('task.index', $category)
+            ->route('tasks.index', $category)
             ->with('success', 'タスクを追加しました。');
     }
     //タスクの編集
