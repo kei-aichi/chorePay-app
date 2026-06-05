@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,3 +20,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::resource('categories', CategoryController::class);
+});
